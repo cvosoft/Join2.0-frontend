@@ -368,8 +368,29 @@ async function addTask(column) {
     "type": document.getElementById("category").value,
   };
 
-  await postData("tasks/", data);
+  let createdTask = await postData("tasks/", data);
+
+  if (createdTask && createdTask.id) {
+    await addSubtasks(createdTask.id);
+  }
+
+
   await visitBoard();
+}
+
+
+async function addSubtasks(taskId) {
+
+  let subtasks = extractSubtasksForTask();
+
+  for (let subtaskName of subtasks) {
+    let subtaskData = {
+      "subtask_name": subtaskName,
+      "finished": false,
+      "task": taskId  // Hier referenzieren wir den Task
+    };
+    await postData("subtasks/", subtaskData);
+  }
 }
 
 
