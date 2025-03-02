@@ -185,6 +185,7 @@ async function createContact() {
 async function deleteContact(index) {
   let id = contacts[index].id;
   await deleteData(`contacts/${id}/`);
+  contacts = await loadData("contacts");
   closeAddOrEditContact();
   backToContactList();
   renderContacts();
@@ -250,10 +251,13 @@ async function editContact(index) {
     phoneNumber: document.getElementById("phoneInput").value,
   };
 
+
   await putData(`contacts/${id}/`, data);
+  contacts = await loadData("contacts");
   closeAddOrEditContact();
   renderContacts();
-  document.getElementById("contactSingleView").innerHTML = renderSingleContactHTML(id);
+  document.getElementById("contactSingleView").innerHTML = renderSingleContactHTML(index);
+
 }
 
 

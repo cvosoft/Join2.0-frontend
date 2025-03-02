@@ -139,21 +139,21 @@
 }
 
 .nameInput {
-  background: url("./assets/img/person_small.png") no-repeat right;
+  background: url("../assets/img/person_small.png") no-repeat right;
   padding-right: 25px;
   background-size: 20px;
   background-origin: content-box;
 }
 
 .mailInput {
-  background: url("./assets/img/mail.png") no-repeat right;
+  background: url("../assets/img/mail.png") no-repeat right;
   padding-right: 25px;
   background-size: 20px;
   background-origin: content-box;
 }
 
 .phoneInput {
-  background: url("./assets/img/call.png") no-repeat right;
+  background: url("../assets/img/call.png") no-repeat right;
   padding-right: 25px;
   background-size: 20px;
   background-origin: content-box;
