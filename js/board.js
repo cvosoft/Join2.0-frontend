@@ -100,7 +100,7 @@ function loadBoardBigContainerSubtasks(i) {
   for (let j = 0; j < boardTasks[i].subtasks.length; j++) {
     const element = boardTasks[i].subtasks[j];
     let src = "";
-    if (element.complete == false) {
+    if (element.finished == false) {
       src = "../assets/img/Property 1=Default.png";
     } else {
       src = "../assets/img/Property 1=hover checked.png";
@@ -214,16 +214,21 @@ function loadPrioBoardTask(i) {
  * @param {*} i
  */
 async function toggleCheckSubtask(j, i) {
-  if (boardTasks[i].subtasks[j].complete == false) {
+  let id = boardTasks[i].id;
+  if (boardTasks[i].subtasks[j].finished == false) {
     document.getElementById(`${i}checkBox${j}`).src = "../assets/img/Property 1=hover checked.png";
-    boardTasks[i].subtasks[j].complete = true;
-    boardTasks[i].finishedSubtasks++;
+    boardTasks[i].subtasks[j].finished = true;
+    //boardTasks[i].finishedSubtasks++;
   } else {
     document.getElementById(`${i}checkBox${j}`).src = "../assets/img/Property 1=Default.png";
-    boardTasks[i].subtasks[j].complete = false;
-    boardTasks[i].finishedSubtasks--;
+    boardTasks[i].subtasks[j].finished = false;
+    //boardTasks[i].finishedSubtasks--;
   }
-  await putData("boardtasks", boardTasks);
+  let subtaskdata = boardTasks[i].subtasks;
+  console.log(subtaskdata);
+  
+  
+  await patchData(`tasks/${id}/`, { "subtasks" : subtaskdata} );
   renderAllBoardTasks();
 }
 
