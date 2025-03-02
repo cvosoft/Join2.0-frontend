@@ -56,17 +56,25 @@ function prioSelectForEditTask(prio) {
  * function to pre-fill the values of the displayed task when editting a task
  * @param {} id
  */
-function fillEditTaskFormWithValues(id) {
+async function fillEditTaskFormWithValues(id) {
   document.getElementsByClassName("titleId")[1].value = boardTasks[id].title;
   document.getElementsByClassName("descriptionId")[1].value = boardTasks[id].description;
   document.getElementsByClassName("dateId")[1].value = boardTasks[id].due_date;
   document.getElementsByClassName("categoryId")[1].value = boardTasks[id].type;
   let prio = boardTasks[id].priority;
   prioSelectForEditTask(prio);
-  selectedTaskContacts = boardTasks[id].assignedTo;
+
+  for (let index=0; index < boardTasks[id].assigned_to.length;index++) {
+    const element = boardTasks[id].assigned_to[index];
+    act_contact = await loadData(`contacts/${element}`);
+    selectedTaskContacts.push(act_contact);
+  }
+  
+  //selectedTaskContacts = boardTasks[id].assignedTo;
   if (selectedTaskContacts !== undefined) {
     showSelectedContactsForEditTask();
   }
+  
   loadContactListForEditTask();
   let subtasks = [];
   let subtasksCheck = [];
