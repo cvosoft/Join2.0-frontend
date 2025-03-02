@@ -128,7 +128,7 @@ function countFinishedSubtasks(id) {
   let counter = 0;
   for (let index = 0; index < boardTasks[id].subtasks.length; index++) {
     const element = boardTasks[id].subtasks[index];
-    if (element.complete == true) {
+    if (element.finished == true) {
       counter++;
     }
   }
