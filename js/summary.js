@@ -120,6 +120,6 @@ function findUpcomingDeadline() {
       boardTasksTemp.push(element);
     }
   }
-  boardTasksTemp.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
-  return boardTasksTemp[0].dueDate;
+  boardTasksTemp.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
+  return boardTasksTemp[0].due_date;
 }

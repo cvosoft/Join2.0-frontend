@@ -225,7 +225,7 @@ async function toggleCheckSubtask(j, i) {
     //boardTasks[i].finishedSubtasks--;
   }
   let subtaskdata = boardTasks[i].subtasks;
-  console.log(subtaskdata);
+  //console.log(subtaskdata);
   
   
   await patchData(`tasks/${id}/`, { "subtasks" : subtaskdata} );

@@ -53,7 +53,12 @@ async function deleteData(path = "") {
       "Content-Type": "application/json",
     },
   });
-  return response.json();
+
+  // Prüfen, ob eine Antwort existiert, bevor sie geparst wird
+  if (response.status === 204 || response.status === 205) {
+    return null; // Kein Inhalt zurückgegeben
+  }
+
 }
 
 
