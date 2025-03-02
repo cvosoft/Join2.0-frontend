@@ -65,7 +65,7 @@ function loadBoardBigContainerLists(i) {
   if (boardTasks[i].subtasks) {
     loadBoardBigContainerSubtasks(i);
   }
-  if (boardTasks[i].assignedTo) {
+  if (boardTasks[i].assigned_to) {
     loadBoardBigContainerContacts(i);
   }
 }
@@ -73,20 +73,22 @@ function loadBoardBigContainerLists(i) {
 /**
  * function to render the priority of each task in the big large view
  */
-function loadBoardBigContainerContacts(i) {
+async function loadBoardBigContainerContacts(i) {
   let assignedToContactsInput = document.getElementById("boardBigContainerAssignedToContactsInput");
   let maxAmount = 3;
-  let amount = boardTasks[i]["assignedTo"].length;
+  let amount = boardTasks[i]["assigned_to"].length;
   let more = amount - maxAmount;
   if (amount <= maxAmount) {
     for (let j = 0; j < amount; j++) {
-      const element = boardTasks[i]["assignedTo"][j];
-      assignedToContactsInput.innerHTML += renderBoardBigContainerContacts(element);
+      const element = boardTasks[i]["assigned_to"][j];
+      let act_contact = await loadData(`contacts/${element}`);
+      assignedToContactsInput.innerHTML += renderBoardBigContainerContacts(act_contact);
     }
   } else {
     for (let j = 0; j < maxAmount; j++) {
-      const element = boardTasks[i]["assignedTo"][j];
-      assignedToContactsInput.innerHTML += renderBoardBigContainerContacts(element);
+      const element = boardTasks[i]["assigned_to"][j];
+      let act_contact = await loadData(`contacts/${element}`);
+      assignedToContactsInput.innerHTML += renderBoardBigContainerContacts(act_contact);
     }
     assignedToContactsInput.innerHTML += renderBoardBigContainerContactsMore(more);
   }
@@ -226,9 +228,9 @@ async function toggleCheckSubtask(j, i) {
   }
   let subtaskdata = boardTasks[i].subtasks;
   //console.log(subtaskdata);
-  
-  
-  await patchData(`tasks/${id}/`, { "subtasks" : subtaskdata} );
+
+
+  await patchData(`tasks/${id}/`, { "subtasks": subtaskdata });
   renderAllBoardTasks();
 }
 
