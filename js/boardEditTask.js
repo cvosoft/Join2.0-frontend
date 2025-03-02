@@ -74,7 +74,7 @@ function fillEditTaskFormWithValues(id) {
   if (subtaskList !== undefined) {
     for (let index = 0; index < subtaskList.length; index++) {
       const element = subtaskList[index];
-      subtasks.push(element.subtaskText);
+      subtasks.push(element.subtask_name);
       subtasksCheck.push(element.complete);
     }
   }
@@ -121,7 +121,7 @@ async function editTask(index) {
     type: document.getElementsByClassName("categoryId")[1].value,
     priority: prios[prioIndex],
     assignedTo: [],
-    subtasks: [],
+    subtasks: generateJSONFromSubtasks(),
   }
   await patchData(`tasks/${id}/`, data);
   removeboardBigContainer();
@@ -222,8 +222,8 @@ function generateJSONFromSubtasks() {
     const subtask = subtasksText[index];
     const check = subtasksChecks[index];
     let json = {
-      subtaskText: subtask,
-      complete: check,
+      subtask_name: subtask,
+      finished: check,
     };
     subtasks.push(json);
   }
