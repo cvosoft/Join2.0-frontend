@@ -247,6 +247,19 @@ function selectContacts(i) {
   showSelectedContacts();
 }
 
+function getContactIds(array){
+  	let contactIds = [];
+    let contactObjects = [];
+    for (let i = 0; i < array.length; i++) {
+      contactIds.push(array[i].id);
+      contactObjects.push({ id: array[i].id });  // Wrap ID in an object
+    }
+    return contactObjects;
+}
+
+
+
+
 /**
  * function to switch to the board site after adding a task
  */

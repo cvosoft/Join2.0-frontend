@@ -130,7 +130,7 @@ async function editTask(index) {
     dueDate: document.getElementsByClassName("dateId")[1].value,
     type: document.getElementsByClassName("categoryId")[1].value,
     priority: prios[prioIndex],
-    assigned_to: selectedTaskContactsIds,
+    assigned_to: getContactIds(selectedTaskContacts),
     subtasks: generateJSONFromSubtasks(),
   }
   await patchData(`tasks/${id}/`, data);
