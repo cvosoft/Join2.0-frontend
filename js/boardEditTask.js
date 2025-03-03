@@ -64,6 +64,7 @@ async function fillEditTaskFormWithValues(id) {
   let prio = boardTasks[id].priority;
   prioSelectForEditTask(prio);
 
+  selectedTaskContacts = [];
   for (let index=0; index < boardTasks[id].assigned_to.length;index++) {
     const element = boardTasks[id].assigned_to[index];
     act_contact = await loadData(`contacts/${element}`);
@@ -74,8 +75,9 @@ async function fillEditTaskFormWithValues(id) {
   if (selectedTaskContacts !== undefined) {
     showSelectedContactsForEditTask();
   }
-  
-  loadContactListForEditTask();
+    loadContactListForEditTask();
+
+
   let subtasks = [];
   let subtasksCheck = [];
   let subtaskList = boardTasks[id].subtasks;
@@ -128,7 +130,7 @@ async function editTask(index) {
     dueDate: document.getElementsByClassName("dateId")[1].value,
     type: document.getElementsByClassName("categoryId")[1].value,
     priority: prios[prioIndex],
-    assignedTo: [],
+    assigned_to: selectedTaskContactsIds,
     subtasks: generateJSONFromSubtasks(),
   }
   await patchData(`tasks/${id}/`, data);
