@@ -124,13 +124,16 @@ function showEditTask(id) {
  */
 async function editTask(index) {
   let id = boardTasks[index].id;
+
+  let selectedTaskContactsIds = selectedTaskContacts.map(contact => contact.id);  // Make sure it's an array of IDs
+
   let data = {
     title: document.getElementsByClassName("titleId")[1].value,
     description: document.getElementsByClassName("descriptionId")[1].value,
     dueDate: document.getElementsByClassName("dateId")[1].value,
     type: document.getElementsByClassName("categoryId")[1].value,
     priority: prios[prioIndex],
-    assigned_to: getContactIds(selectedTaskContacts),
+    assigned_to: selectedTaskContactsIds,
     subtasks: generateJSONFromSubtasks(),
   }
   await patchData(`tasks/${id}/`, data);
