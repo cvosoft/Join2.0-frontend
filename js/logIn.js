@@ -139,9 +139,12 @@ async function signUpSuccessful() {
 
   if (token) {
     addUserToContacts(user, email, token);
-    register.innerHTML += `<div id="signInSuccessful" class="feedback">You signed up successfully</div>`;
-    setTimeout(showLogIn, 1600);
-    document.getElementById("username").value = username;
+    register.innerHTML += `<div id="signInSuccessful" class="feedback">Username: ${username}</div>`;
+    setTimeout(() => {
+      showLogIn();
+      document.getElementById("username").value = username;
+      document.getElementById("password").value = password;
+    }, 2000);
   } else {
     register.innerHTML += `<div id="signInSuccessful" class="feedback">Something was wrong. Try again.</div>`;
     setTimeout(removeErrorMessage, 1600);
