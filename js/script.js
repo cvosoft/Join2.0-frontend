@@ -94,11 +94,12 @@ async function patchData(path = "", data = {}) {
 }
 
 
-async function postData(path = "", data = {}) {
+async function postData(path = "", data = {}, token) {
   let response = await fetch(BASE_URL + path, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": `Token ${token}`
     },
     body: JSON.stringify(data),
   });

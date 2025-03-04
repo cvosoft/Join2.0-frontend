@@ -34,9 +34,9 @@ function checkForLocalStorageCookie() {
  * function to load all the users from the database
  */
 async function loadUserData() {
-  let response = await fetch(BASE_URL + "users.json");
-  responseAsJson = await response.json();
-  userArray = Object.values(responseAsJson);
+  // let response = await fetch(BASE_URL + "users.json");
+  // responseAsJson = await response.json();
+  // userArray = Object.values(responseAsJson);
 }
 
 /**
@@ -114,23 +114,34 @@ function showLogIn() {
 async function signUpSuccessful() {
   let email = document.getElementById("email").value;
   let password = document.getElementById("password").value;
+  let rep_password = document.getElementById("confirmPassword").value;
   let user = document.getElementById("user").value;
   let register = document.getElementById("middleSection");
-  addUserToContacts(user, email);
-  await fetch(BASE_URL + "users.json", {
+
+  let response = await fetch(BASE_URL + "auth/registration/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      User: user,
+      username: user.split(" ").join(""),
       email: email,
       password: password,
+      repeated_password: rep_password,
     }),
   });
-  loadUserData();
-  register.innerHTML += `<div id="signInSuccessful" class="feedback">You Signed Up successful</div>`;
-  setTimeout(showLogIn(), 1600);
+  //loadUserData();
+  let data = await response.json();
+  let token = data.token;
+
+  if (token) {
+    addUserToContacts(user, email, token);
+    register.innerHTML += `<div id="signInSuccessful" class="feedback">You signed up successfully</div>`;
+    setTimeout(showLogIn, 1600);
+  } else {
+    register.innerHTML += `<div id="signInSuccessful" class="feedback">Something was wrong. Try again.</div>`;
+    setTimeout(removeErrorMessage, 1600);
+  }
 }
 
 /**
@@ -192,6 +203,10 @@ function removeNoSuccessfullSignUp() {
   document.getElementById("signInNoSuccessful").remove();
 }
 
+function removeErrorMessage() {
+  document.getElementById("signInSuccessful").remove();
+}
+
 /**
  * function to visit the summary page
  */
@@ -219,8 +234,8 @@ function guestLogIn() {
  * @param {*} user
  * @param {*} email
  */
-async function addUserToContacts(user, email) {
-  let contacts = await loadData("contacts");
+async function addUserToContacts(user, email, token) {
+  //let contacts = await loadData("contacts");
   // split username
   let nameArray = user.split(" ");
   let new_firstName = nameArray[0];
@@ -232,5 +247,5 @@ async function addUserToContacts(user, email) {
     phoneNumber: "",
     profileColor: getRandomBackgroundColor(),
   };
-  await putData(`contacts/${contacts.length}`, data);
+  await postData(`contacts/`, data, token);
 }
