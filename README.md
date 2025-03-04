@@ -1,7 +1,7 @@
 JOIN 2.0!
 
 Frontend: VanillaJS  
-Backend: DRF
+Backend: DRF (https://github.com/cvosoft/Join2.0-backend)  
 
 -----
 
