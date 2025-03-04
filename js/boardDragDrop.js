@@ -96,7 +96,7 @@ async function moveTo(category) {
     "category": category
   };
 
-  await patchData(`tasks/${id}/`, data);
+  await patchData(`tasks/${id}/`, data, token);
 }
 
 
@@ -117,11 +117,11 @@ async function moveTaskCategoryUp(index) {
   let id = boardTasks[index].id;
   let category = boardTasks[index].category;
   if (category == "progress") {
-    await patchData(`tasks/${id}/`, { "category": "todo" });
+    await patchData(`tasks/${id}/`, { "category": "todo" }, token);
   } else if (category == "feedback") {
-    await patchData(`tasks/${id}/`, { "category": "progress" });
+    await patchData(`tasks/${id}/`, { "category": "progress" }, token);
   } else if (category == "done") {
-    await patchData(`tasks/${id}/`, { "category": "feedback" });
+    await patchData(`tasks/${id}/`, { "category": "feedback" }, token);
   }
   boardTasks = await loadData("tasks");
   renderAllBoardTasks();
@@ -136,12 +136,12 @@ async function moveTaskCategoryDown(index) {
   let category = boardTasks[index].category;
 
   if (category == "todo") {
-    await patchData(`tasks/${id}/`, { "category": "progress" });
+    await patchData(`tasks/${id}/`, { "category": "progress" }, token);
   } else if (category == "progress") {
-    await patchData(`tasks/${id}/`, { "category": "feedback" });
+    await patchData(`tasks/${id}/`, { "category": "feedback" }, token);
   } else if (category == "feedback") {
-    await patchData(`tasks/${id}/`, { "category": "done" });
+    await patchData(`tasks/${id}/`, { "category": "done" }, token);
   }
-  boardTasks = await loadData("tasks");
+  boardTasks = await loadData("tasks", token);
   renderAllBoardTasks();
 }

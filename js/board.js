@@ -1,13 +1,18 @@
+//let token = [];
 let boardTasks = [];
 
 /**
  * function to initialize the board page
  */
 async function boardInit() {
+  token = checkForToken();
+  if (!token) {
+    backToIndex();
+  }
   await includeHTML();
   updateHeaderInitials();
-  boardTasks = await loadData("tasks");
-  contacts = await loadData("contacts");
+  boardTasks = await loadData("tasks", token);
+  contacts = await loadData("contacts", token);
   renderAllBoardTasks();
 }
 
@@ -81,13 +86,13 @@ async function loadBoardBigContainerContacts(i) {
   if (amount <= maxAmount) {
     for (let j = 0; j < amount; j++) {
       const element = boardTasks[i]["assigned_to"][j];
-      let act_contact = await loadData(`contacts/${element}`);
+      let act_contact = await loadData(`contacts/${element}`, token);
       assignedToContactsInput.innerHTML += renderBoardBigContainerContacts(act_contact);
     }
   } else {
     for (let j = 0; j < maxAmount; j++) {
       const element = boardTasks[i]["assigned_to"][j];
-      let act_contact = await loadData(`contacts/${element}`);
+      let act_contact = await loadData(`contacts/${element}`, token);
       assignedToContactsInput.innerHTML += renderBoardBigContainerContacts(act_contact);
     }
     assignedToContactsInput.innerHTML += renderBoardBigContainerContactsMore(more);
@@ -230,7 +235,7 @@ async function toggleCheckSubtask(j, i) {
   //console.log(subtaskdata);
 
 
-  await patchData(`tasks/${id}/`, { "subtasks": subtaskdata });
+  await patchData(`tasks/${id}/`, { "subtasks": subtaskdata }, token);
   renderAllBoardTasks();
 }
 
@@ -300,7 +305,7 @@ async function checkIfEmptyContainer(column) {
 async function deleteTask(i) {
   //boardTasks.splice(i, 1);
   id = boardTasks[i].id;
-  await deleteData(`tasks/${id}/`);
+  await deleteData(`tasks/${id}/`, token);
   removeboardBigContainer();
   renderAllBoardTasks();
 }

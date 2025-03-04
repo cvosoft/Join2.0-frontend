@@ -1,4 +1,5 @@
 /* GENERAL FUNCTIONS */
+let token = [];
 
 // critical breakpoint of viewport width
 let vwBreak = 1350;
@@ -25,6 +26,20 @@ let backgroundProfileColors = [
   "#FFE62B",
 ];
 
+
+function checkForToken() {
+  return localStorage.getItem("token");
+}
+
+function setToken(token) {
+  localStorage.setItem("token", token);
+}
+
+
+function backToIndex() {
+  window.location = "index.html";
+}
+
 /**
  * function to return a random background profile color for new users
  * @returns string
@@ -40,17 +55,24 @@ function getRandomBackgroundColor() {
  * @param {*} path
  * @returns JSON-Array
  */
-async function loadData(path = "") {
-  let response = await fetch(BASE_URL + path);
+async function loadData(path = "", token) {
+  let response = await fetch(BASE_URL + path, {
+    method: "GET",    
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Token ${token}`
+    },
+  });
   return (responseToJson = await response.json());
 }
 
 
-async function deleteData(path = "") {
+async function deleteData(path = "", token) {
   let response = await fetch(BASE_URL + path, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": `Token ${token}`
     },
   });
 
@@ -68,12 +90,13 @@ async function deleteData(path = "") {
  * @param {*} data
  * @returns
  */
-async function putData(path = "", data = {}) {
+async function putData(path = "", data = {}, token) {
   //let response = await fetch(BASE_URL + path + ".json", {
   let response = await fetch(BASE_URL + path, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": `Token ${token}`      
     },
     body: JSON.stringify(data),
   });
@@ -81,12 +104,13 @@ async function putData(path = "", data = {}) {
 }
 
 
-async function patchData(path = "", data = {}) {
+async function patchData(path = "", data = {}, token) {
   //let response = await fetch(BASE_URL + path + ".json", {
   let response = await fetch(BASE_URL + path, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": `Token ${token}`
     },
     body: JSON.stringify(data),
   });
@@ -206,6 +230,7 @@ function sleep(ms) {
 function logOutUser() {
   localStorage.removeItem("user");
   localStorage.removeItem("cred");
+  localStorage.removeItem("token");
   window.location = "index.html";
 }
 

@@ -1,3 +1,5 @@
+//let token = [];
+
 let task = [];
 let subtasks = [];
 let subtaskCounter = 0;
@@ -12,11 +14,15 @@ let selectedTaskContactsIds = [];
  * Onload Function for the Add Task page
  */
 async function onLoadAddTask() {
+  token = checkForToken();
+  if (!token) {
+    backToIndex();
+  }
   await includeHTML();
   updateHeaderInitials();
   document.getElementById("closeButton").style.display = "none";
-  contacts = await loadData("contacts");
-  boardTasks = await loadData("tasks");
+  contacts = await loadData("contacts", token);
+  boardTasks = await loadData("tasks", token);
   loadContactList();
   prioChoose(1); //pre-selected medium
   // minimum date for new tasks is today
@@ -247,14 +253,14 @@ function selectContacts(i) {
   showSelectedContacts();
 }
 
-function getContactIds(array){
-  	let contactIds = [];
-    let contactObjects = [];
-    for (let i = 0; i < array.length; i++) {
-      contactIds.push(array[i].id);
-      contactObjects.push({ id: array[i].id });  // Wrap ID in an object
-    }
-    return contactObjects;
+function getContactIds(array) {
+  let contactIds = [];
+  let contactObjects = [];
+  for (let i = 0; i < array.length; i++) {
+    contactIds.push(array[i].id);
+    contactObjects.push({ id: array[i].id });  // Wrap ID in an object
+  }
+  return contactObjects;
 }
 
 
@@ -381,7 +387,7 @@ async function addTask(column) {
     "type": document.getElementById("category").value,
   };
 
-  let createdTask = await postData("tasks/", data);
+  let createdTask = await postData("tasks/", data, token);
 
   if (createdTask && createdTask.id) {
     await addSubtasks(createdTask.id);

@@ -65,17 +65,17 @@ async function fillEditTaskFormWithValues(id) {
   prioSelectForEditTask(prio);
 
   selectedTaskContacts = [];
-  for (let index=0; index < boardTasks[id].assigned_to.length;index++) {
+  for (let index = 0; index < boardTasks[id].assigned_to.length; index++) {
     const element = boardTasks[id].assigned_to[index];
-    act_contact = await loadData(`contacts/${element}`);
+    act_contact = await loadData(`contacts/${element}`, token);
     selectedTaskContacts.push(act_contact);
   }
-  
+
   //selectedTaskContacts = boardTasks[id].assignedTo;
   if (selectedTaskContacts !== undefined) {
     showSelectedContactsForEditTask();
   }
-    loadContactListForEditTask();
+  loadContactListForEditTask();
 
 
   let subtasks = [];
@@ -136,7 +136,7 @@ async function editTask(index) {
     assigned_to: selectedTaskContactsIds,
     subtasks: generateJSONFromSubtasks(),
   }
-  await patchData(`tasks/${id}/`, data);
+  await patchData(`tasks/${id}/`, data, token);
   removeboardBigContainer();
 }
 

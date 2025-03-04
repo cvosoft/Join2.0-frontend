@@ -1,3 +1,5 @@
+//let token = [];
+
 let contacts = [];
 let currentId;
 
@@ -5,9 +7,13 @@ let currentId;
  * onload function for the contacts page
  */
 async function onLoadFunc() {
+  token = checkForToken();
+  if (!token) {
+    backToIndex();
+  }
   await includeHTML();
   updateHeaderInitials();
-  contacts = await loadData("contacts");
+  contacts = await loadData("contacts", token);
   renderContacts();
 }
 
@@ -165,7 +171,7 @@ function resetAddContactForm() {
 async function createContact() {
   data = getDataForNewContact();
   //await putData(`contacts/${contacts.length}`, data);
-  await postData("contacts/", data);
+  await postData("contacts/", data, token);
   resetAddContactForm();
   onLoadFunc();
   closeAddOrEditContact();
@@ -184,8 +190,8 @@ async function createContact() {
 // }
 async function deleteContact(index) {
   let id = contacts[index].id;
-  await deleteData(`contacts/${id}/`);
-  contacts = await loadData("contacts");
+  await deleteData(`contacts/${id}/`, token);
+  contacts = await loadData("contacts", token);
   closeAddOrEditContact();
   backToContactList();
   renderContacts();
@@ -252,8 +258,8 @@ async function editContact(index) {
   };
 
 
-  await putData(`contacts/${id}/`, data);
-  contacts = await loadData("contacts");
+  await putData(`contacts/${id}/`, data, token);
+  contacts = await loadData("contacts", token);
   closeAddOrEditContact();
   renderContacts();
   document.getElementById("contactSingleView").innerHTML = renderSingleContactHTML(index);

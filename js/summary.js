@@ -1,13 +1,22 @@
+//let token = [];
+
 /**
  * onload function of the summary.html: renders actual data into the html page
  */
 async function onLoadSummary() {
+  token = checkForToken();
+  if (!token) {
+    backToIndex();
+  }
   await includeHTML();
-  boardTasks = await loadData("tasks");
+  boardTasks = await loadData("tasks", token);
   greetUser();
   fillSummaryFields();
   await updateHeaderInitials();
 }
+
+
+
 
 /**
  * function fill the values of the summary page

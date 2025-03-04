@@ -214,14 +214,19 @@ function openSummary() {
   window.location = "summary.html";
 }
 
+
+
+
 /**
  * function for the guest login
  */
 function guestLogIn() {
-  let login = document.getElementById("logIn");
+  let guestToken = "57d42b9507fbe48228ac855bfc6b8ab1154a07a4"
+  //let login = document.getElementById("logIn");
   let user = { User: "Guest" };
   let userAsText = JSON.stringify(user);
   localStorage.setItem("user", userAsText);
+  localStorage.setItem("token", guestToken);
   if (window.innerWidth < 1260) {
     openWelcomeMobile();
   } else {
