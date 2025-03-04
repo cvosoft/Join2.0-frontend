@@ -1,13 +1,13 @@
-JOIN 2.0!
+# JOIN 2.0!
+## A kanban board
 
-Frontend: VanillaJS  
-Backend: DRF (https://github.com/cvosoft/Join2.0-backend)  
+The [Frontend](https://github.com/cvosoft/Join2.0-frontend) was realized with _VanillaJS_,  
+The [Backend](https://github.com/cvosoft/Join2.0-backend/) was realized with _DRF_
 
 -----
 
-Start Backend with  
-python3 manage.py runserver
-
-
 Start Frontend with  
-VS Code LiveServer
+`VS Code LiveServer`
+
+Start Backend with  
+`python3 manage.py runserver`
