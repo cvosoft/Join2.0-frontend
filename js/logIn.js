@@ -176,21 +176,31 @@ async function logIn() {
     localStorage.removeItem("cred");
   }
   let email = document.getElementById("email");
+  let username = document.getElementById("username");
   let password = document.getElementById("password");
   let register = document.getElementById("middleSection");
 
   let data = {
-    "username": email,
-    "password": password
+    "username": username.value,
+    "password": password.value
   }
 
-  await postData(`auth/login/`, data);
+  let response = await fetch(BASE_URL + "auth/login/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
 
+  let answer = await response.json();
 
-  let user = userArray.find((u) => u.email == email.value && u.password == password.value);
-  if (user) {
-    let userAsText = JSON.stringify(user);
-    localStorage.setItem("user", userAsText);
+  // let user = userArray.find((u) => u.email == email.value && u.password == password.value);
+
+  if (answer.token) {
+    localStorage.setItem("user", answer.username);
+    localStorage.setItem("token", answer.token);
+
     if (window.innerWidth < 1260) {
       openWelcomeMobile();
     } else {
@@ -198,7 +208,7 @@ async function logIn() {
     }
   } else {
     sleep(0).then(() => {
-      document.getElementById("email").value = email.value;
+      document.getElementById("username").value = username.value;
       document.getElementById("password").value = password.value;
     });
 

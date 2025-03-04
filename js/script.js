@@ -57,7 +57,7 @@ function getRandomBackgroundColor() {
  */
 async function loadData(path = "", token) {
   let response = await fetch(BASE_URL + path, {
-    method: "GET",    
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Token ${token}`
@@ -96,7 +96,7 @@ async function putData(path = "", data = {}, token) {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Token ${token}`      
+      "Authorization": `Token ${token}`
     },
     body: JSON.stringify(data),
   });
@@ -151,20 +151,30 @@ async function includeHTML() {
   }
 }
 
+function splitCamelCase(name) {
+  return name.replace(/([a-z])([A-Z])/g, '$1 $2');
+}
+
+
 /**
  * function to return the name of the logged in user
  * @returns
  */
 function getLoggedInUserName() {
-  let user = [];
-  let userAsText = localStorage.getItem("user");
-  if (userAsText == null) {
-    user = { User: "Guest" };
-  } else {
-    user = JSON.parse(userAsText);
-  }
-  return user.User;
+  //   let user = [];
+  //   let userAsText = localStorage.getItem("user");
+  //   if (userAsText == null) {
+  //     user = { User: "Guest" };
+  //   } else {
+  //     user = JSON.parse(userAsText);
+  //   }
+  //   return user.User;
+  // 
+  let user = localStorage.getItem("user");
+  if (user == null) { return "Guest" }
+  else { return splitCamelCase(user) }
 }
+
 
 /**
  * function to update the initials in the header
