@@ -132,7 +132,7 @@ async function signUpSuccessful() {
   });
   //loadUserData();
   let data = await response.json();
-  console.log(data);
+  //console.log(data);
 
   let token = data.token;
   let username = data.username;
@@ -249,9 +249,8 @@ function openSummary() {
 function guestLogIn() {
   let guestToken = "57d42b9507fbe48228ac855bfc6b8ab1154a07a4"
   //let login = document.getElementById("logIn");
-  let user = { User: "Guest" };
-  let userAsText = JSON.stringify(user);
-  localStorage.setItem("user", userAsText);
+  let user = "Guest";
+  localStorage.setItem("user", user);
   localStorage.setItem("token", guestToken);
   if (window.innerWidth < 1260) {
     openWelcomeMobile();

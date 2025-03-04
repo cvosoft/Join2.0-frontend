@@ -43,6 +43,7 @@ function fillSummaryFields() {
 function greetUser() {
   let greeting = actGreeting();
   let loggedInUserName = getLoggedInUserName();
+  //console.log(loggedInUserName)
 
   if (loggedInUserName == "Guest") {
     document.getElementById("greeting").innerHTML = greeting.slice(0, -1);

@@ -8,7 +8,7 @@ function updateAddTaskFormToEditTask(id) {
   document.getElementsByClassName("headLine")[1].style.display = "flex";
   document.getElementsByClassName("headLine")[1].style.justifyContent = "flex-end";
   document.getElementsByClassName("addTaskFormId")[1].setAttribute("onsubmit", `editTask(${id});return false;`);
-  document.getElementsByClassName("createButton")[1].innerHTML = "Edit Task";
+  document.getElementsByClassName("createButton")[1].innerHTML = "Update Task";
   document.getElementsByClassName("lowerSpans")[1].style.display = "none";
   document.getElementsByClassName("clearButton")[1].style.display = "none";
   document.getElementsByClassName("lower")[1].style.justifyContent = "flex-end";

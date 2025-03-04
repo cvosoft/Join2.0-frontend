@@ -16,7 +16,7 @@
   <form id="addOrEditForm" onsubmit="createContact(); return false;">
     <input required id="nameInput" type="text" class="nameInput" placeholder="Name" pattern="[A-Z][a-z\u00F0-\u02AF]+\s[A-Z][a-z\u00F0-\u02AF]+" title="first and last name needed (first letters big)" />
     <input required id="emailInput" type="email" class="mailInput" placeholder="Email" pattern="[A-Za-z0-9.\-]+@[A-Za-z0-9\-]+\.[A-Za-z]+"/>
-    <input required id="phoneInput" type="tel" class="phoneInput" placeholder="Phone" pattern="([+][0-9]+)" title="international number (+49 ....)" />
+    <input required id="phoneInput" type="tel" class="phoneInput" placeholder="Phone (+49 ...)" pattern="\+49[0-9 \-]{6,14}" title="international number (+49 ....)" />
     <div class="buttonPair">
       <button type="button" id="cancelButton" onclick="closeAddOrEditContact()">Cancel<img src="assets/img/cancel.svg" /></button>
       <button type="button" id="deleteButton" onclick="deleteContact()">Delete</button>

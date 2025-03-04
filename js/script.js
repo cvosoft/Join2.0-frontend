@@ -127,7 +127,7 @@ async function postData(path = "", data = {}, token) {
     },
     body: JSON.stringify(data),
   });
-  console.log(JSON.stringify(data));
+  //console.log(JSON.stringify(data));
 
   return response.json();
 }

@@ -408,7 +408,7 @@ async function addSubtasks(taskId) {
       "finished": false,
       "task": taskId  // Hier referenzieren wir den Task
     };
-    await postData("subtasks/", subtaskData);
+    await postData("subtasks/", subtaskData, token);
   }
 }
 
