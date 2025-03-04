@@ -7,12 +7,18 @@ function renderLogInHTML() {
 </div>
 
 <div class="logInSection">
-  <div class="inputfield">
+  <!-- <div class="inputfield">
     <input id="email" type="email" placeholder="Email" required />
     <div class="inputIcons">
       <img class="mailIcon" src="./assets/img/mail.png" />
     </div>
-  </div>
+  </div> -->
+  <div class="inputfield">
+    <input id="username" type="text" placeholder="Username" required />
+    <!-- <div class="inputIcons">
+      <img class="mailIcon" src="./assets/img/mail.png" />
+    </div> -->
+  </div>  
   <div id="inputfieldPassword" class="inputfield">
     <input
       id="password"

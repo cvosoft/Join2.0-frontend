@@ -132,12 +132,16 @@ async function signUpSuccessful() {
   });
   //loadUserData();
   let data = await response.json();
+  console.log(data);
+
   let token = data.token;
+  let username = data.username;
 
   if (token) {
     addUserToContacts(user, email, token);
     register.innerHTML += `<div id="signInSuccessful" class="feedback">You signed up successfully</div>`;
     setTimeout(showLogIn, 1600);
+    document.getElementById("username").value = username;
   } else {
     register.innerHTML += `<div id="signInSuccessful" class="feedback">Something was wrong. Try again.</div>`;
     setTimeout(removeErrorMessage, 1600);
@@ -165,7 +169,7 @@ function openWelcomeMobile() {
 /**
  * function to collect the data from the login form and login a user
  */
-function logIn() {
+async function logIn() {
   if (document.getElementById("rememberMe").checked) {
     saveCredentialsToLocalStorage();
   } else {
@@ -174,6 +178,15 @@ function logIn() {
   let email = document.getElementById("email");
   let password = document.getElementById("password");
   let register = document.getElementById("middleSection");
+
+  let data = {
+    "username": email,
+    "password": password
+  }
+
+  await postData(`auth/login/`, data);
+
+
   let user = userArray.find((u) => u.email == email.value && u.password == password.value);
   if (user) {
     let userAsText = JSON.stringify(user);
